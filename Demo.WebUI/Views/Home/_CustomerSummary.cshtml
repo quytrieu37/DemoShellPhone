@@ -1,0 +1,17 @@
+﻿@model Demo.Domain.Entities.Customer
+
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <img src="@Model.Avatar"
+             class="img-fluid" />
+        <p>@Model.CustomerId</p>
+
+        <h3 class="card-title pricing-card-title">
+            @Model.CustomerName
+        </h3>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary">
+            Add To Card
+        </button>
+    </div>
+</div>

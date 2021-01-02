@@ -1,0 +1,112 @@
+﻿@model Demo.Domain.Entities.Cart
+
+
+<!--<div class="container">
+    <div class="row">-->
+<!--Product-->
+<!--<div class="col-12 col-md-8">
+    <table class="table table-bordered">
+        <tr>
+            <td>Sản Phẩm</td>
+            <td>Hình Ảnh</td>
+            <td>Đơn Giá</td>
+            <td>Số Lượng</td>
+            <td>Tổng</td>
+        </tr>
+
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td>@line.Product.ProductId</td>
+                <td><img src="@line.Product.ProductImage" class="img-fluid" style="max-height:100px" /></td>
+                <td>@line.Product.Price</td>
+                <td>@line.Quantity</td>
+                <td>@(line.Quantity*line.Product.Price)</td>
+            </tr>
+        }
+    </table>
+</div>-->
+<!--Tổng Tiền-->
+<!--<div class="col-12 col-md-4">
+            <div class="list-group">
+                <div class="list-group-item">
+                    @Model.CaculateTotal()
+                </div>
+                <a class="list-group-item active" href="#">
+                    THANH TOÁN
+                </a>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<h2>Your Cart</h2>
+@if (Model.Lines.Count() == 0)
+{
+    <h3>Giỏ hàng rỗng</h3>
+}
+else
+{
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <table class="table table-bordered">
+                <tr>
+                    <td>#</td>
+                    <td>Sản Phẩm</td>
+                    <td>Hình Ảnh</td>
+                    <td>Số Lượng</td>
+                    <td>Đơn Giá</td>
+                    <td>Thành Tiền</td>
+                    <td>
+                    </td>
+                </tr>
+                @foreach (var line in Model.Lines)
+                {
+                    <tr>
+                        <td>@line.Product.ProductId</td>
+                        <td>@line.Product.ProductName</td>
+                        <td><img src="@line.Product.ProductImage" alt="@line.Product.ProductName" style="max-height:100px" class="img-fluid" /></td>
+                        <td>
+                            @using (Html.BeginForm("UpdateToCartJson", "Cart", FormMethod.Post, new { @class = "frmUpdateToCart" }))
+                            {
+                                <input name="ProductId" value="@line.Product.ProductId" type="hidden" />
+                                <input name="Quantity" value="@line.Quantity" type="number" class="form-control" />
+                                <!--text box dùng để hiển thị name cho một thuộc tính mình tự định nghĩ không phải thuộc tính model-->
+                                @*@Html.TextBox("Quantity")*@
+                            }
+                        </td>
+                        <td>@line.Product.Price</td>
+                        <td>@(line.Product.Price * line.Quantity)</td>
+                        <td>
+
+                            @using (Html.BeginForm("RemoveFromCartJson", "Cart", FormMethod.Post, new { @class = "frmRemoveFromCart" }))
+                            {
+                                <input name="productId" value="@line.Product.ProductId" type="hidden" />
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="list-group">
+                <div class="list-group-item">
+                    @Model.CaculateTotal().ToString("c")<!--convert qua kiểu tiền de hien thị dấu $-->
+                </div>
+                <a href="@Url.Action("Checkout","Cart")" class="list-group-item list-group-item-success">
+                    Đặt hàng
+                </a>
+                <a href="@Url.Action("ListProduct","Home")" class="list-group-item list-group-item-secondary">
+                    Tiếp tục mua hàng
+                </a>
+            </div>
+        </div>
+    </div>
+
+}
+
+

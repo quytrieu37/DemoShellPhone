@@ -1,0 +1,51 @@
+﻿@model Demo.WebUI.Models.HomeListCustomerViewModel
+@{
+    ViewBag.Title = "ListCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-12 col-md-3">
+        <div class="list-group">
+            @foreach(var province in Model.Provinces)
+            {
+                <a href="@Url.Action("ListCustomer", "Home", new { province=province.ProvinceId})" class="list-group-item">
+                    @province.ProvinceName
+                </a>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-md-9">
+        <h2>ListCustomer</h2>
+        <div class="card-deck mb-3 text-center">
+            @foreach (var customer in Model.Customers)
+            {
+                @Html.Partial("_CustomerSummary", customer)
+            }
+        </div>
+
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PagingInfo.CurentPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" href="@Url.Action("ListCustomer", "Home", new { Page= Model.PagingInfo.CurentPage-1, pageSize=Model.PagingInfo.PageSize, category= Model.CurrentProvince})">Previous</a></li>
+                }
+
+                @for (int i = 1, n = Model.PagingInfo.TotalPages; i <= n; i++)
+                {
+                    <li class="page-item  @(i == Model.PagingInfo.CurentPage ? "active":"")">
+                        <a class="page-link" href="@Url.Action("ListCustomer", "Home", new { page=i , pageSize=Model.PagingInfo.PageSize, province= Model.CurrentProvince})">@i</a>
+                    </li>
+                }
+                @if (Model.PagingInfo.CurentPage < Model.PagingInfo.TotalPages)
+                {
+                    <li class="page-item"><a class="page-link" href="@Url.Action("ListCustomer", "Home", new { Page= Model.PagingInfo.CurentPage+1, pageSize=Model.PagingInfo.PageSize, province= Model.CurrentProvince})">Next</a></li>
+                }
+
+            </ul>
+        </nav>
+
+    </div>
+</div>

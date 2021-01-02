@@ -1,0 +1,21 @@
+﻿@model Demo.WebUI.Models.HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Chào bạn đây là view index Home</h1>
+<div class="card-deck mb-3 text-center">
+    @foreach (var product in Model.Products)
+    {
+        @Html.Partial("_ProductSummary", product)
+    }
+</div>
+
+
+
+@section js{
+    <script>
+        console.log('index page');
+    </script>
+}

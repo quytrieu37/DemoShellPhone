@@ -1,0 +1,13 @@
+﻿@model Demo.Domain.Entities.Cart
+@{
+    ViewBag.Title = "Your Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>view index của card controller</h1>
+
+
+<div class="body-summary">
+    @{
+        Html.RenderAction("BodySummary", "Cart"); //html.renderaction là cú pháp gọi 1 partial view có gọi đến action ở đây sử dụng @{ } vì hàm này có kiểu trả  về là void
+    }
+</div>

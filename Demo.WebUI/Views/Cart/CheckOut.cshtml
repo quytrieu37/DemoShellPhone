@@ -1,0 +1,109 @@
+﻿@model Demo.WebUI.Models.CartCheckOutModel
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var payments = ViewBag.Payments as List<Demo.Domain.Entities.Payment>;
+}
+
+<h2>CheckOut</h2>
+
+<div class="row">
+    <div class="col-12 col-md-8">
+        @using (Html.BeginForm("CheckOut", "Cart", FormMethod.Post, new { @class = "frmCheckOut" }))
+        {
+            @*@Html.EditorForModel()// sử dụng cho model đã khai báo nhưng không đẹp 
+                <button type="submit" class="btn btn-primary">
+                    Đặt Hàng
+                </button>*@
+            //x đại diện cho model
+            @Html.ValidationSummary(true)// nếu false thì hiển thi tất cả validate ở đầu trang còn true thì ta có thể định nghĩa map vào đâu để custome cho đẹp
+            <div class="form-group">
+                @Html.LabelFor(x => x.FullName)
+                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })<!--text box for để hiển thị textbox của thuộc tính model hiện hành-->
+                <small class="form-text text-muted">
+                    @Html.ValidationMessageFor(x=> x.FullName)
+                </small>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12 col-md-6">
+                    @Html.LabelFor(x => x.Email)
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })<!--text box for để hiển thị textbox của model-->
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.Email)
+                    </small>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    @Html.LabelFor(x => x.Phone)
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })<!--text box for để hiển thị textbox của model-->
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.Phone)
+                    </small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Address)
+                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })<!--text box for để hiển thị textbox của model-->
+                <small class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.PaymentMethod)
+                @Html.DropDownListFor(x => x.PaymentMethod, new SelectList(payments, "PaymentId", "PaymentName"), new { @class = "form-control" })<!--text box for để hiển thị textbox của model-->
+                <small class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Note)
+                @Html.TextAreaFor(x => x.Note, new { @class = "form-control" })<!--text box for để hiển thị textbox của model-->
+            </div>
+            <div class="form-group form-check">
+                @Html.CheckBoxFor(x => x.UseShipper, new { @class = "form-check-input" })
+                @Html.LabelFor(x => x.UseShipper, new { @class = "form-check-label" })
+            </div>
+            <button type="submit" class="btn btn-primary">Đặt hàng</button>
+        }
+    </div>
+    <div class="col-12 col-md-4">
+
+    </div>
+</div>
+
+@*@section js{ // xài js để validate các trường
+    <script>
+    function isEmail(email){
+    const re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+    }
+
+        $(document).ready(function (e) {
+            e.preventDefault();
+
+            //validates
+            let fullName = $(this).find('input[name=FullName]').val().trim();
+            if (fullName.length === 0) {
+                alert('vui long nhap full name');
+                return false;
+            }
+        let email = $(this).find('input[name= Email]').val().trim();
+    if(email.lenght==0)
+    {
+    vui long nhập e mail}
+    else (!isEmail(email))
+    {
+    alert(email ko dung dinh dạng)
+    return false;
+    }
+        });
+    </script>
+
+    }*@
+
+@section js{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+
+    </script>
+}

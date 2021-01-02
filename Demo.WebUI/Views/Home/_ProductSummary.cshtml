@@ -1,0 +1,33 @@
+﻿@model Demo.Domain.Entities.Product
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <img src="@Model.ProductImage"
+             class="img-fluid" />
+
+        <h3 class="card-title pricing-card-title">
+            @Model.ProductName
+        </h3>
+
+        @*@using (Html.BeginForm("AddToCart","Cart", FormMethod.Post , new { @class="frmForm"}))
+        {
+            <input class="form-control" type="number" value="1" min="1" max="10" name="Quantity"/>
+            <input name="ProductId" value="@Model.ProductId" type="hidden" />
+            <button type="submit" class="btn btn-outline-primary">
+                Add
+            </button>
+        }*@
+
+        @using (Html.BeginForm("AddToCartJson", "Cart", FormMethod.Post, new { @class="frmAddToCart" }))
+        {
+            <input name="ProductId" value="@Model.ProductId" type="hidden"/>// để ProductId và Quantity vì bên model ta viết hoa nên t nên để viết hoa ở đây
+            @Html.TextBox("productId", Model.ProductId, new { type="hidden"})
+            <input name="Quantity" value="1" type="number"/>
+            <button type="submit" class="btn btn-block btn-outline-primary">
+                Add To Cart
+            </button>
+
+        }
+    </div>
+</div>
+
